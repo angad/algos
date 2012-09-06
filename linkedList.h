@@ -48,6 +48,20 @@ public:
 
 	//reverses the linked list
 	node* reverse();
+
+	//create a loop
+	node* createLoop();
+
+	//check if there is a loop
+	bool detectLoop();
+
+	//count the number
+	//linked list may contain a loop
+	int count();
+
+
+
+
 };
 
 

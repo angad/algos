@@ -101,6 +101,55 @@ node* LinkedList::reverse() {
 	return head;
 }
 
+//Using the Tortoise and Hare algorithm
+//http://en.wikipedia.org/wiki/Cycle_detection
+//also called Floyd's cycle-finding algorithm
+bool LinkedList::detectLoop() {
+	node *slownode = head;
+	node *fastnode = head;
+
+	while(fastnode && fastnode->next) {
+		if(fastnode->next == slownode) {
+			cout<<"tortoise was one step ahead of hare"<<endl;
+			return true;
+		}
+		if(fastnode->next->next == slownode) {
+			cout<<"tortoise was two steps ahead of hare"<<endl;
+			return true;
+		}
+		fastnode = fastnode->next->next;
+		slownode = slownode->next;
+		cout<<"step"<<endl;
+	}
+	return false;
+}
+
+//creates a loop in the current linked list by
+//attaching the next of the last to the head
+node* LinkedList::createLoop() {
+	if(head->next == NULL) return head;
+	node* ptr = head;
+	for(; ptr->next != NULL; ptr=ptr->next);
+	ptr->next = head;
+	return head;
+}
+
+int LinkedList::count() {
+	if(head->next == NULL) return 0;
+
+	if(detectLoop()) {
+		return -1;
+		//to be implemented
+	}
+
+	node* ptr = head;
+	int c = 1;
+	for(; ptr->next != NULL; ptr=ptr->next) {
+		c++;
+	}
+	return c;
+}
+
 int main() {
 	LinkedList *l = new LinkedList();
 
@@ -118,10 +167,18 @@ int main() {
 	l->insert(25, 2);
 	l->print();
 	cout<<"...."<<endl;
-	l->remove(25);
-	l->print();
-	l->reverse();
+//	l->remove(25);
+//	l->print();
+//	l->reverse();
 	cout<<"...."<<endl;
 	l->print();
+	cout<<"...."<<endl;
+	l->createLoop();
+
+	if(l->detectLoop())
+		cout<<"LOOP detected!"<<endl;
+	cout<<"...."<<endl;
+	cout<<"length: "<<l->count()<<endl;
 	return 0;
+
 }
