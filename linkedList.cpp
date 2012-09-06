@@ -5,16 +5,16 @@
  *      Author: angadsingh
  */
 
-#include<iostream.h>
+#include<iostream>
 #include "linkedList.h"
 
 void LinkedList::print() {
 	node *ptr = head;
 	for(; ptr->next!=NULL; ptr=ptr->next) {
-		cout<<ptr->n<<endl;
+		std::cout<<ptr->n<<std::endl;
 	}
 	//print the last element
-	cout<<ptr->n<<endl;
+	std::cout<<ptr->n<<std::endl;
 }
 
 
@@ -110,16 +110,14 @@ bool LinkedList::detectLoop() {
 
 	while(fastnode && fastnode->next) {
 		if(fastnode->next == slownode) {
-			cout<<"tortoise was one step ahead of hare"<<endl;
 			return true;
 		}
 		if(fastnode->next->next == slownode) {
-			cout<<"tortoise was two steps ahead of hare"<<endl;
 			return true;
 		}
 		fastnode = fastnode->next->next;
 		slownode = slownode->next;
-		cout<<"step"<<endl;
+		std::cout<<"step"<<std::endl;
 	}
 	return false;
 }
@@ -150,6 +148,22 @@ int LinkedList::count() {
 	return c;
 }
 
+
+int LinkedList::getNth(int n) {
+	if(head->next == NULL) return 0;
+
+	if(n > count()) return -1;
+
+	node* ptr = head;
+	int i = 0;
+	for(; ptr->next != NULL; ptr=ptr->next) {
+		if(n==i) {
+			return ptr->n;
+		}
+	}
+	return -1;
+}
+
 int main() {
 	LinkedList *l = new LinkedList();
 
@@ -157,28 +171,28 @@ int main() {
 	l->add(20);
 	l->add(30);
 	l->print();
-//	cout<<"...."<<endl;
+//	std::cout<<"...."<<std::endl;
 //	l->insert(5, 0);
 //	l->print();
-//	cout<<"...."<<endl;
+//	std::cout<<"...."<<std::endl;
 //	l->insert(15, 1);
 //	l->print();
-	cout<<"...."<<endl;
+	std::cout<<"...."<<std::endl;
 	l->insert(25, 2);
 	l->print();
-	cout<<"...."<<endl;
+	std::cout<<"...."<<std::endl;
 //	l->remove(25);
 //	l->print();
 //	l->reverse();
-	cout<<"...."<<endl;
+	std::cout<<"...."<<std::endl;
 	l->print();
-	cout<<"...."<<endl;
+	std::cout<<"...."<<std::endl;
 	l->createLoop();
 
 	if(l->detectLoop())
-		cout<<"LOOP detected!"<<endl;
-	cout<<"...."<<endl;
-	cout<<"length: "<<l->count()<<endl;
+		std::cout<<"LOOP detected!"<<std::endl;
+	std::cout<<"...."<<std::endl;
+	std::cout<<"length: "<<l->count()<<std::endl;
 	return 0;
 
 }

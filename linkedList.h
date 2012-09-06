@@ -40,6 +40,7 @@ public:
 	//inserts a new node with value n at position p
 	node* insert(int n, int p);
 
+
 	//removes node
 	node* remove(node*);
 
@@ -59,8 +60,30 @@ public:
 	//linked list may contain a loop
 	int count();
 
+	//get the nth value
+	int getNth(int n);
 
 
+	//TODO:
+	//Inspired from cslibrary.stanford.edu/105/LinkedListProblems.pdf
+
+	//sorted insert
+	node* sortedInsert(int n);
+
+	//remove duplicates from a sorted list
+	void removeDuplicates();
+
+	//shuffle merge
+	node* shuffleMerge(node* head1, node* head2);
+
+	//sorted merge (merge two lists which are already sorted)
+	node* sortedmMerge(node* head1, node* head2);
+
+	//split
+	node* split();
+
+	//merge sort
+	node* mergeSort();
 
 };
 
