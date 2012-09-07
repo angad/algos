@@ -26,6 +26,10 @@ public:
 		head->next = NULL;
 	}
 
+	LinkedList(node *head) {
+		this->head = head;
+	}
+
 	~LinkedList() {
 		delete(head);
 	}
@@ -63,13 +67,14 @@ public:
 	//get the nth value
 	int getNth(int n);
 
-
-	//TODO:
 	//Inspired from cslibrary.stanford.edu/105/LinkedListProblems.pdf
+	//split
+	node* split();
 
 	//sorted insert
 	node* sortedInsert(int n);
 
+	//TODO:
 	//remove duplicates from a sorted list
 	void removeDuplicates();
 
@@ -79,12 +84,8 @@ public:
 	//sorted merge (merge two lists which are already sorted)
 	node* sortedmMerge(node* head1, node* head2);
 
-	//split
-	node* split();
-
 	//merge sort
 	node* mergeSort();
-
 };
 
 

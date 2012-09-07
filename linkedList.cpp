@@ -8,17 +8,30 @@
 #include<iostream>
 #include "linkedList.h"
 
+using namespace std;
+
 void LinkedList::print() {
+	if(head == NULL) {
+		cout<<"No elements in the list to print!"<<endl;
+		return;
+	}
+
 	node *ptr = head;
 	for(; ptr->next!=NULL; ptr=ptr->next) {
-		std::cout<<ptr->n<<std::endl;
+		cout<<ptr->n<<endl;
 	}
 	//print the last element
-	std::cout<<ptr->n<<std::endl;
+	cout<<ptr->n<<endl;
 }
 
 
 node* LinkedList::add(int n) {
+
+	if(head == NULL) {
+		head = new node();
+		head->n = n;
+		head->next = NULL;
+	}
 
 	//First element in the list
 	if(head->n == 0) {
@@ -38,31 +51,38 @@ node* LinkedList::add(int n) {
 }
 
 node* LinkedList::insert(int n, int p) {
+	if(head == NULL) return NULL;
 
+	int c = count();
+	if(p >= c) {
+		//if inserting at a position greater than length
+		//then append
+		return add(n);
+	}
 
 	node *ptr = head;
 	node *next = new node();
 	next->n = n;
-
 	if(p==0) {
+		//inserting at head
 		next->next = head;
 		head = next;
 		return head;
 	}
+
 	int i = 1;
 	for(; ptr->next!=NULL; ptr=ptr->next) {
 		if(i==p) {
 			next->next = ptr->next;
 			ptr->next = next;
 			return head;
-		}
-		i++;
+		} i++;
 	}
-
 	return head;
 }
 
 node* LinkedList::remove(int n) {
+	if(head == NULL) return NULL;
 
 	if(head->n == n) {
 		head = head->next;
@@ -78,6 +98,7 @@ node* LinkedList::remove(int n) {
 }
 
 node* LinkedList::remove(node *n) {
+	if(head == NULL) return NULL;
 
 	node* ptr = head;
 	for(; ptr->next != NULL; ptr=ptr->next) {
@@ -89,6 +110,7 @@ node* LinkedList::remove(node *n) {
 }
 
 node* LinkedList::reverse() {
+	if(head == NULL) return NULL;
 
 	node *new_head = NULL;
 	while(head) {
@@ -117,7 +139,6 @@ bool LinkedList::detectLoop() {
 		}
 		fastnode = fastnode->next->next;
 		slownode = slownode->next;
-		std::cout<<"step"<<std::endl;
 	}
 	return false;
 }
@@ -164,35 +185,99 @@ int LinkedList::getNth(int n) {
 	return -1;
 }
 
+node* LinkedList::split() {
+	int n = count();
+	if(n == 1) return NULL;
+	int iter = (n / 2) + (n % 2);
+
+	node* ptr = head;
+	for(int i = 1; i < iter; i++) {
+		ptr = ptr->next;
+	}
+
+	cout<<"splitting at "<<ptr->n<<endl;
+	node* half = ptr->next;
+	ptr->next = NULL;
+	return half;
+}
+
+node* LinkedList::sortedInsert(int n) {
+	node *next = new node();
+	next->n = n;
+
+	node *ptr = head;
+	if(n <= ptr->n) {
+		//if smaller than the first element
+		next->next = head;
+		head = next;
+		return head;
+	}
+
+	for(; ptr->next!=NULL; ptr=ptr->next) {
+		//if in-between two elements
+		if(n >= ptr->n && n <= ptr->next->n) {
+			next->next = ptr->next;
+			ptr->next = next;
+			return head;
+		}
+	}
+	//if larger than the last element
+	if(n >= ptr->n) {
+		next->next = NULL;
+		ptr->next = next;
+		return head;
+	}
+
+	return head;
+}
+
 int main() {
 	LinkedList *l = new LinkedList();
 
 	l->add(10);
-	l->add(20);
-	l->add(30);
+//	l->add(20);
+//	l->add(30);
+//	l->add(40);
 	l->print();
-//	std::cout<<"...."<<std::endl;
+//	cout<<"...."<<endl;
 //	l->insert(5, 0);
 //	l->print();
-//	std::cout<<"...."<<std::endl;
+//	cout<<"...."<<endl;
 //	l->insert(15, 1);
 //	l->print();
-	std::cout<<"...."<<std::endl;
-	l->insert(25, 2);
+	cout<<"...."<<endl;
+//	l->insert(25, 10);
 	l->print();
-	std::cout<<"...."<<std::endl;
+	cout<<"...."<<endl;
 //	l->remove(25);
 //	l->print();
 //	l->reverse();
-	std::cout<<"...."<<std::endl;
+	cout<<"...."<<endl;
 	l->print();
-	std::cout<<"...."<<std::endl;
-	l->createLoop();
+	cout<<"...."<<endl;
 
-	if(l->detectLoop())
-		std::cout<<"LOOP detected!"<<std::endl;
-	std::cout<<"...."<<std::endl;
-	std::cout<<"length: "<<l->count()<<std::endl;
+	l->sortedInsert(40);
+	l->sortedInsert(20);
+	l->sortedInsert(5);
+	l->sortedInsert(60);
+	l->sortedInsert(55);
+	l->print();
+//	l->createLoop();
+
+	if(l->detectLoop()) cout<<"LOOP detected!"<<endl;
+	else cout <<"No LOOP detected"<<endl;
+
+	cout<<"...."<<endl;
+	cout<<"length: "<<l->count()<<endl;
+	l->print();
+
+	LinkedList *half = new LinkedList(l->split());
+
+	l->print();
+	cout<<"...."<<endl;
+	half->print();
+
+
 	return 0;
 
 }
