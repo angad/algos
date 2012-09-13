@@ -74,6 +74,8 @@ public:
 	//sorted insert
 	node* sortedInsert(int n);
 
+	node* mthToLast(int m);
+
 	//TODO:
 	//remove duplicates from a sorted list
 	void removeDuplicates();

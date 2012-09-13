@@ -231,6 +231,31 @@ node* LinkedList::sortedInsert(int n) {
 	return head;
 }
 
+//adapted from Programming Interviews Exposed
+//pg. 43-44
+node* LinkedList::mthToLast(int m) {
+	node *current, *mBehind;
+	int i;
+
+	current = head;
+
+	for(i = 0; i < m; i++) {
+		if(current->next) {
+			current = current->next;
+		} else {
+			return NULL;
+		}
+	}
+
+	mBehind = head;
+	while(current->next) {
+		current = current->next;
+		mBehind = mBehind->next;
+	}
+
+	return mBehind;
+}
+
 int main() {
 	LinkedList *l = new LinkedList();
 
@@ -276,8 +301,6 @@ int main() {
 	l->print();
 	cout<<"...."<<endl;
 	half->print();
-
-
 	return 0;
 
 }
