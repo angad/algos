@@ -37,9 +37,9 @@ public:
 
 	node* push(int n);
 	int pop();
-
-
-
+	int peek();
+	Stack* sort();
+	bool isEmpty();
 };
 
 #endif /* STACK_H_ */

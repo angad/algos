@@ -34,6 +34,33 @@ int Stack::pop() {
 	}
 }
 
+int Stack::peek() {
+	int n;
+	if(top == NULL) {
+		return -1;
+	} else {
+		return top->n;
+	}
+}
+
+bool Stack::isEmpty() {
+	if(top == NULL) return true;
+	else return false;
+}
+
+Stack* Stack::sort() {
+
+	Stack *t = new Stack();
+	while(!isEmpty()) {
+		int tmp = pop();
+		while(!t->isEmpty() && t->peek > tmp) {
+			push(t->pop());
+		}
+		t->push(tmp);
+	}
+	return t;
+}
+
 int main() {
 
 	Stack *s = new Stack();
@@ -42,6 +69,11 @@ int main() {
 
 	cout<<s->pop()<<endl;
 	cout<<s->pop()<<endl;
+
+	Stack *t = s->sort();
+	cout<<t->pop()<<endl;
+	cout<<t->pop()<<endl;
+
 
 	return 0;
 }

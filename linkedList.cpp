@@ -256,6 +256,15 @@ node* LinkedList::mthToLast(int m) {
 	return mBehind;
 }
 
+void LinkedList::removeDuplicates() {
+
+	//O(n^2) method with 2 pointers
+
+	//O(n) if using hashing
+}
+
+
+
 int main() {
 	LinkedList *l = new LinkedList();
 
